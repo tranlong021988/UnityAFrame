@@ -95,7 +95,7 @@
                 );
             });*/
             console.log("ar init !");
-            const arCamera = document.querySelector('#ar-camera');
+            const arCamera = document.getElementById("ar-camera");
             arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
