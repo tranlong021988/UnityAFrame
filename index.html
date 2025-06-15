@@ -23,8 +23,8 @@
     
     <!-- define a camera which will move according to the marker position 
     <a-marker-camera id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera>-->
-    <a-entity camera look-controls>
-        <a-marker markerhandler preset='hiro' id="ar-camera">
+    <a-entity id="ar-camera" camera look-controls >
+        <a-marker markerhandler preset='hiro' id="ar-marker">
             <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
         </a-marker>
     </a-entity>
@@ -102,8 +102,9 @@
                 );
             });*/
             console.log("ar init !");
-            const arCamera = document.getElementById("ar-camera");
-            arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
+            const arMarker= document.getElementById("ar-marker");
+            const arCamera= document.getElementById("ar-camera");
+            arMarker.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
                 const matrix = arCamera.object3D.matrixWorld;
