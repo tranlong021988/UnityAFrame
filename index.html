@@ -94,6 +94,7 @@
                     JSON.stringify(matrixArray)
                 );
             });*/
+            console.log("ar init !");
             const arCamera = document.querySelector('#ar-camera');
             arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
