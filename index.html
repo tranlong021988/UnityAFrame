@@ -95,12 +95,13 @@
                 );
             });*/
             const arCamera = document.querySelector('#ar-camera');
-            arCamera.addEventListener('markerFound', (event) => {
+            arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
                 const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 if (matrixChanged(matrixArray)) {
+                    console.log("data sent!");
                     window.unityInstance.SendMessage(
                         'ARManager',
                         'OnARCameraUpdate',
