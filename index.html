@@ -15,12 +15,19 @@
     </style>
 </head>
 <body style='margin : 0px; overflow: hidden;'>
-  <a-scene embedded arjs="trackingMethod: best;" arjs-debug-ui-enabled = "true">
+  <a-scene vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded arjs="trackingMethod: best;" arjs-debug-ui-enabled = "true">
     <!-- create your content here. just a box for now -->
      
-    <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
-    <!-- define a camera which will move according to the marker position -->
-    <a-marker-camera id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera>
+    
+    <!-- define a camera which will move according to the marker position 
+    <a-marker-camera id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera>-->
+    <a-entity camera look-controls>
+        <a-marker markerhandler preset='hiro' id="ar-camera">
+            <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
+        </a-marker>
+    </a-entity>
   </a-scene>
 
 
