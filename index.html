@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Unity + A-Frame AR</title>
+      <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    <style>
+        body { margin: 0; overflow: hidden; }
+        #unity-container { position: absolute; width: 100%; height: 100%; z-index: 2; }
+        #unity-canvas { width: 100%; height: 100%; background: transparent !important; }
+        #aframe-scene { position: absolute; width: 100%; height: 100%; z-index: 1; }
+    </style>
+</head>
+<body>
+    <a-scene id="aframe-scene" embedded arjs="trackingMethod: best; sourceType: webcam;" background="color: transparent">
+        <a-camera ></a-camera>
+        <a-marker id="main-marker" preset="hiro" emitevents="true"></a-marker>
+    </a-scene>
+    <div id="unity-container">
+        <canvas id="unity-canvas"></canvas>
+    </div>
+    <script>
+        // CẤU HÌNH QUAN TRỌNG - THAY BẰNG TÊN FILE BUILD THẬT CỦA BẠN
+        const buildConfig = {
+            loaderFilename: "UnityAFrame", // Tên file .loader.js (không cần .js)
+            dataFilename: "UnityAFrame",
+            frameworkFilename: "UnityAFrame",
+            codeFilename: "UnityAFrame",
+            productName: "MyARApp",
+            productVersion: "1.0"
+        };
+        const buildUrl = "Build";
+        const loaderUrl = `${buildUrl}/${buildConfig.loaderFilename}.loader.js`;
+        const config = {
+            dataUrl: `${buildUrl}/${buildConfig.dataFilename}.data`,
+            frameworkUrl: `${buildUrl}/${buildConfig.frameworkFilename}.framework.js`,
+            codeUrl: `${buildUrl}/${buildConfig.codeFilename}.wasm`,
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: buildConfig.productName,
+            productName: buildConfig.productName,
+            productVersion: buildConfig.productVersion
+        };
+        const container = document.querySelector("#unity-container");
+        const canvas = document.querySelector("#unity-canvas");
+        // TẠO VÀ LOAD SCRIPT ĐỘNG
+        const loaderScript = document.createElement("script");
+        loaderScript.src = loaderUrl;
+        loaderScript.onload = () => {
+            // CHỈ GỌI KHI SCRIPT ĐÃ LOAD
+            createUnityInstance(canvas, config, (progress) => {
+                console.log(`Loading: ${Math.round(progress * 100)}%`);
+            }).then((unityInstance) => {
+                console.log("Unity loaded successfully!");
+                window.unityInstance = unityInstance;
+                initAFrameTracking();
+            }).catch((error) => {
+                console.error("Unity initialization failed:", error);
+            });
+        };
+        loaderScript.onerror = () => {
+            console.error("Failed to load Unity loader script!");
+        };
+        document.body.appendChild(loaderScript);
+        function initAFrameTracking() {
+            const marker = document.querySelector('#main-marker');
+            if (!marker) return;
+            marker.addEventListener('markerFound', (event) => {
+                if (!window.unityInstance) return;
+                const matrix = event.detail.matrix;
+                const matrixArray = Array.from(matrix);
+                window.unityInstance.SendMessage(
+                    'ARManager',
+                    'OnMarkerFound',
+                    JSON.stringify(matrixArray)
+                );
+            });
+        }
+    </script>
+</body>
+</html>
