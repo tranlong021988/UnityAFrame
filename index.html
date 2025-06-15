@@ -111,10 +111,11 @@
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 if (matrixChanged(matrixArray)) {
                     console.log("data sent!");
+                    const JsonData =  JSON.stringify(matrixArray);
                     window.unityInstance.SendMessage(
                         'ARManager',
                         'OnARCameraUpdate',
-                        JSON.stringify(matrixArray)
+                        JsonData
                     );
                     lastMatrix = matrixArray;
                 }
