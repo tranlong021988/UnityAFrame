@@ -20,7 +20,7 @@
      
     <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
     <!-- define a camera which will move according to the marker position -->
-    <a-marker-camera preset='hiro'></a-marker-camera>
+    <a-marker-camera id="ar-camera" preset='hiro'></a-marker-camera>
   </a-scene>
 
 
@@ -69,9 +69,20 @@
         loaderScript.onerror = () => {
             console.error("Failed to load Unity loader script!");
         };
+        
         document.body.appendChild(loaderScript);
+
+        let lastMatrix = null;
+        const threshold = 0.01;
+        function matrixChanged(newMatrix) {
+        if (!lastMatrix) return true;
+        for (let i = 0; i < 16; i++) {
+            if (Math.abs(newMatrix[i] - lastMatrix[i]) > threshold) return true;
+        }
+        return false;
+        }
         function initAFrameTracking() {
-            const marker = document.querySelector('#main-marker');
+           /* const marker = document.querySelector('#main-marker');
             if (!marker) return;
             marker.addEventListener('markerFound', (event) => {
                 if (!window.unityInstance) return;
@@ -82,6 +93,22 @@
                     'OnMarkerFound',
                     JSON.stringify(matrixArray)
                 );
+            });*/
+            const arCamera = document.querySelector('#ar-camera');
+            arCamera.addEventListener('markerFound', (event) => {
+                if (!window.unityInstance) return;
+                // Lấy ma trận world của camera
+                const matrix = arCamera.object3D.matrixWorld;
+                const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
+                if (matrixChanged(matrixArray)) {
+                    window.unityInstance.SendMessage(
+                        'ARManager',
+                        'OnARCameraUpdate',
+                        JSON.stringify(matrixArray)
+                    );
+                    lastMatrix = matrixArray;
+                }
+                
             });
         }
     </script>
