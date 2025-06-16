@@ -22,7 +22,7 @@
      
     
   
-    <a-marker-camera  id="ar-camera" preset="hiro" emitevents="true" transformtounity></a-marker-camera> 
+    <a-marker-camera  id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> 
     <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
    <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
    <!-- <a-entity id="ar-camera" camera look-controls >
@@ -96,8 +96,9 @@
            
         
             console.log("ar init !");
+            var sceneEl = document.querySelector('a-scene');
             const arMarker= document.getElementById("ar-marker");
-            const arCamera= document.getElementById("ar-camera");
+            const arCamera= sceneEl.querySelector("#ar-camera");
             arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
@@ -106,7 +107,7 @@
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
                // if (matrixChanged(matrixArray)) {
-                    console.log("data sent!");
+                    console.log(matrixString);
                     
                     window.unityInstance.SendMessage(
                         'ARManager',
