@@ -104,7 +104,7 @@
                 var sceneEl = document.querySelector('a-scene');
                 const arCamera= sceneEl.querySelector('#ar-camera');
                 const arMarker= document.querySelector("a-marker");
-                const matrix = arCamera.object3D.matrixWorld;
+                const matrix = arCamera.object3D.matrix;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
