@@ -124,7 +124,7 @@
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
                // if (matrixChanged(matrixArray)) {
-                    console.log("data sent!");
+                    console.log(matrixString);
                     
                     window.unityInstance.SendMessage(
                         'ARManager',
