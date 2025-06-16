@@ -22,7 +22,7 @@
      
     
   
-    <a-marker-camera  id="ar-camera" position="0 0 -10" preset="hiro" emitevents="true"></a-marker-camera> 
+    <a-marker-camera rotation-reader  id="ar-camera" position="0 0 -10" preset="hiro" emitevents="true"></a-marker-camera> 
     <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
    <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
    <!-- <a-entity id="ar-camera" camera look-controls >
@@ -99,24 +99,17 @@
             var sceneEl = document.querySelector('a-scene');
             const arMarker= document.getElementById("ar-marker");
             const arCamera= sceneEl.querySelector("a-marker-camera");
-            arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
-                if (!window.unityInstance) return;
-                // Lấy ma trận world của camera
-                const matrix = arCamera.object3D.matrixWorld;
-                const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
-                const roundedArray = matrixArray.map(n=>n.toFixed(4));
-                const matrixString = roundedArray.join(',');
-               // if (matrixChanged(matrixArray)) {
-                    console.log(matrixString);
-                    
-                    window.unityInstance.SendMessage(
-                        'ARManager',
-                        'OnARCameraUpdate',
-                        matrixString
-                    );
-                    lastMatrix = matrixArray;
-              //  }
-                
+           AFRAME.registerComponent('rotation-reader', {
+            tick: function () {
+                // `this.el` is the element.
+                // `object3D` is the three.js object.
+
+                // `rotation` is a three.js Euler using radians. `quaternion` also available.
+                console.log(this.el.object3D.rotation);
+
+                // `position` is a three.js Vector3.
+                console.log(this.el.object3D.position);
+            }
             });
             function SendTransformToUnity(){
                 var sceneEl = document.querySelector('a-scene');
@@ -126,7 +119,7 @@
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
                // if (matrixChanged(matrixArray)) {
-                    console.log("js string: "+arCamera.object3D.position.x+" "+arCamera.object3D.position.y+" "+arCamera.object3D.position.z);
+                   // console.log("js string: "+arCamera.object3D.position.x+" "+arCamera.object3D.position.y+" "+arCamera.object3D.position.z);
                     
                     window.unityInstance.SendMessage(
                         'ARManager',
@@ -136,7 +129,7 @@
                     lastMatrix = matrixArray;
                     requestAnimationFrame(SendTransformToUnity);
             }
-             requestAnimationFrame(SendTransformToUnity);
+           //  requestAnimationFrame(SendTransformToUnity);
         }
         
     </script>
