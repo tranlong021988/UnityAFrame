@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Unity + A-Frame AR</title>
       <!-- include A-Frame obviously -->
- <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
+ <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
 <!-- include ar.js for A-Frame -->
 <script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
     <style>
@@ -59,7 +59,7 @@
         const container = document.querySelector("#unity-container");
         const canvas = document.querySelector("#unity-canvas");
         // TẠO VÀ LOAD SCRIPT ĐỘNG
-        const loaderScript = document.createElement("script");
+       /* const loaderScript = document.createElement("script");
         loaderScript.src = loaderUrl;
         loaderScript.onload = () => {
             // CHỈ GỌI KHI SCRIPT ĐÃ LOAD
@@ -88,7 +88,7 @@
                 if (Math.abs(newMatrix[i] - lastMatrix[i]) > threshold) return true;
             }
             return false;
-        }
+        }*/
         function initAFrameTracking() {
            
            
@@ -117,7 +117,7 @@
                     requestAnimationFrame(SendTransformToUnity);
             }
              requestAnimationFrame(SendTransformToUnity);
-        }
+        } 
         
     </script>
 </body>
