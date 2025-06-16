@@ -60,7 +60,7 @@
         const container = document.querySelector("#unity-container");
         const canvas = document.querySelector("#unity-canvas");
         // TẠO VÀ LOAD SCRIPT ĐỘNG
-       /* const loaderScript = document.createElement("script");
+        const loaderScript = document.createElement("script");
         loaderScript.src = loaderUrl;
         loaderScript.onload = () => {
             // CHỈ GỌI KHI SCRIPT ĐÃ LOAD
@@ -89,7 +89,7 @@
                 if (Math.abs(newMatrix[i] - lastMatrix[i]) > threshold) return true;
             }
             return false;
-        }*/
+        }
         function initAFrameTracking() {
            
            
@@ -97,7 +97,7 @@
             console.log("ar init !");
             var sceneEl = document.querySelector('a-scene');
             const arMarker= document.getElementById("ar-marker");
-            const arCamera= sceneEl.querySelector("a-marker-camera");
+            const arCamera= sceneEl.querySelector("#ar-camera");
           
             function SendTransformToUnity(){
                 var sceneEl = document.querySelector('a-scene');
