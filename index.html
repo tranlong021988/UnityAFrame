@@ -15,21 +15,19 @@
     </style>
 </head>
 <body style='margin : 0px; overflow: hidden;'>
-  <a-scene vr-mode-ui="enabled: false;"
+  <a-scene artoolkit vr-mode-ui="enabled: false;"
     renderer="logarithmicDepthBuffer: true;"
     embedded arjs="trackingMethod: best;" arjs-debug-ui-enabled = "true">
     <!-- create your content here. just a box for now -->
      
     
-  
-    <a-marker-camera rotation-reader  id="ar-camera" position="0 0 -10" preset="hiro" emitevents="true"></a-marker-camera> 
-    <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
-   <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
-   <!-- <a-entity id="ar-camera" camera look-controls >
-        <a-marker markerhandler preset='hiro' id="ar-marker">
-            
+       <a-marker preset="hiro">
+            <a-sphere position="0 0.5 0" radius="0.5" color="#EF2D5E"></a-sphere>
+            <a-plane position="0 0 0" rotation="-90 0 0" width="1" height="1" color="#7BC8A4"></a-plane>
         </a-marker>
-    </a-entity>-->
+
+		<a-entity camera id="ar-camera"></a-entity>
+	</a-scene>
   </a-scene>
 
 
@@ -99,21 +97,10 @@
             var sceneEl = document.querySelector('a-scene');
             const arMarker= document.getElementById("ar-marker");
             const arCamera= sceneEl.querySelector("a-marker-camera");
-           AFRAME.registerComponent('rotation-reader', {
-            tick: function () {
-                // `this.el` is the element.
-                // `object3D` is the three.js object.
-
-                // `rotation` is a three.js Euler using radians. `quaternion` also available.
-                console.log(this.el.object3D.rotation);
-
-                // `position` is a three.js Vector3.
-                console.log(this.el.object3D.position);
-            }
-            });
+          
             function SendTransformToUnity(){
                 var sceneEl = document.querySelector('a-scene');
-                const arCamera= sceneEl.querySelector('a-marker-camera');
+                const arCamera= sceneEl.querySelector('#ar-camera');
                 const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
@@ -121,11 +108,11 @@
                // if (matrixChanged(matrixArray)) {
                     console.log("js string: "+arCamera.object3D.position.x+" "+arCamera.object3D.position.y+" "+arCamera.object3D.position.z);
                     
-                    window.unityInstance.SendMessage(
+                  /*  window.unityInstance.SendMessage(
                         'ARManager',
                         'OnARCameraUpdate',
                         matrixString
-                    );
+                    );*/
                     lastMatrix = matrixArray;
                     requestAnimationFrame(SendTransformToUnity);
             }
