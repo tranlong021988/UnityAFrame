@@ -7,7 +7,7 @@
  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.174.0/three.tsl.js" integrity="sha512-kLVG+9hRPzp61ceEI5/hoRsQmEV9cFf4r4DOCYIBPteqgaTB6awXLAZlWUO5Dvlisok4doFjnxs75mngpXI35w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <!-- include ar.js for A-Frame -->
-<script src="https://jeromeetienne.github.io/AR.js/aframe/build/aframe-ar.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/aframe-ar@0.2.1-a/dist/aframe-ar.min.js"></script>
     <style>
         body { margin: 0; overflow: hidden; }
         #unity-container { position: absolute; width: 100%; height: 100%; z-index: 2; }
@@ -21,13 +21,13 @@
     embedded arjs="trackingMethod: best;" arjs-debug-ui-enabled = "true">
     <!-- create your content here. just a box for now -->
      
-    
-        <a-marker preset="hiro">
+    <a-marker-camera id="ar-camera" preset='hiro'></a-marker-camera>
+        
             <a-sphere position="0 0.5 0" radius="0.5" color="#EF2D5E"></a-sphere>
             <a-plane position="0 0 0" rotation="-90 0 0" width="1" height="1" color="#7BC8A4"></a-plane>
             
-        </a-marker>
-        <a-entity camera id="ar-camera"></a-entity>
+        
+        
 		
 	</a-scene>
   </a-scene>
@@ -104,15 +104,15 @@
                 var sceneEl = document.querySelector('a-scene');
                 const arCamera= sceneEl.querySelector('#ar-camera');
                 const arMarker= document.querySelector("a-marker");
-               /* const matrix = arCamera.object3D.matrixWorld;
+                const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
-                const matrixString = roundedArray.join(',');*/
-                const markerMatrix = arMarker.object3D.matrixWorld;
+                const matrixString = roundedArray.join(',');
+                /*const markerMatrix = arMarker.object3D.matrixWorld;
                 const viewMatrix = markerMatrix.invert();
                 const viewMatrixArray = Array.from(viewMatrix.elements);
                 const roundedViewMatrixArray = viewMatrixArray.map(n=>n.toFixed(4));
-                const matrixString = roundedViewMatrixArray.join(',');
+                const matrixString = roundedViewMatrixArray.join(',');*/
                // if (matrixChanged(matrixArray)) {
                     console.log("js string: "+matrixString);
                     
