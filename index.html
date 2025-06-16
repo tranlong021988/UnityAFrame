@@ -21,12 +21,9 @@
     <!-- create your content here. just a box for now -->
      
     
-   <a-marker id="ar-marker" preset="hiro" emitevents="true">
-        
-        <a-box position='0 0.5 -1' material='opacity: 0.5;'></a-box>
-   </a-marker>
-    <!--<a-marker-camera markerhandler id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> -->
-    <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>
+  
+    <a-marker-camera markerhandler id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> 
+   <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
    <!-- <a-entity id="ar-camera" camera look-controls >
         <a-marker markerhandler preset='hiro' id="ar-marker">
             <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
@@ -94,30 +91,13 @@
         return false;
         }
         function initAFrameTracking() {
-           /* const marker = document.querySelector('#main-marker');
-            if (!marker) return;
-            marker.addEventListener('markerFound', (event) => {
-                if (!window.unityInstance) return;
-                const matrix = event.detail.matrix;
-                const matrixArray = Array.from(matrix);
-                window.unityInstance.SendMessage(
-                    'ARManager',
-                    'OnMarkerFound',
-                    JSON.stringify(matrixArray)
-                );
-            });*/
-            AFRAME.registerComponent('markerhandler', {
-            init: function () {
-            this.el.sceneEl.addEventListener('markerFound', () => {
-                // redirect to custom URL e.g. google.com
-                window.location = 'https://www.google.com/';
-            })
-            }
-        });
+           
+           
+        
             console.log("ar init !");
             const arMarker= document.getElementById("ar-marker");
             const arCamera= document.getElementById("ar-camera");
-            arMarker.addEventListener('markerFound', (event) => { console.log("marker found!");
+            arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
                 const matrix = arCamera.object3D.matrixWorld;
