@@ -96,18 +96,19 @@
         
             console.log("ar init !");
             var sceneEl = document.querySelector('a-scene');
-            const arMarker= document.getElementById("ar-marker");
+            const arMarker= document.querySelector("a-marker");
             const arCamera= sceneEl.querySelector("#ar-camera");
           
             function SendTransformToUnity(){
                 var sceneEl = document.querySelector('a-scene');
                 const arCamera= sceneEl.querySelector('#ar-camera');
+                const arMarker= document.querySelector("a-marker");
                 const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
                // if (matrixChanged(matrixArray)) {
-                    console.log("js string: "+arCamera.object3D.position.x+" "+arCamera.object3D.position.y+" "+arCamera.object3D.position.z);
+                    console.log("js string: "+arMarker.object3D.position.x+" "+arMarker.object3D.position.y+" "+arMarker.object3D.position.z);
                     
                   /*  window.unityInstance.SendMessage(
                         'ARManager',
