@@ -21,8 +21,11 @@
     <!-- create your content here. just a box for now -->
      
     
-   
-    <a-marker-camera markerhandler id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera>
+   <a-marker id="ar-marker" preset="hiro" emitevents="true">
+        <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>
+    
+   </a-marker>
+    <!--<a-marker-camera markerhandler id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> -->
     <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
    <!-- <a-entity id="ar-camera" camera look-controls >
         <a-marker markerhandler preset='hiro' id="ar-marker">
@@ -112,14 +115,15 @@
             }
         });
             console.log("ar init !");
-           // const arMarker= document.getElementById("ar-marker");
+            const arMarker= document.getElementById("ar-marker");
             const arCamera= document.getElementById("ar-camera");
-            arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
+            arMarker.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
                 const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
-                const matrixString = matrixArray.join(',');
+                const roundedArray = matrixArray.map(n=>n.toFixed(4));
+                const matrixString = roundedArray.join(',');
                 if (matrixChanged(matrixArray)) {
                     console.log("data sent!");
                     
