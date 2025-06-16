@@ -22,7 +22,7 @@
      
     
   
-    <a-marker-camera markerhandler id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> 
+    <a-marker-camera  id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> 
    <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
    <!-- <a-entity id="ar-camera" camera look-controls >
         <a-marker markerhandler preset='hiro' id="ar-marker">
@@ -84,11 +84,11 @@
         let lastMatrix = null;
         const threshold = 0.01;
         function matrixChanged(newMatrix) {
-        if (!lastMatrix) return true;
-        for (let i = 0; i < 16; i++) {
-            if (Math.abs(newMatrix[i] - lastMatrix[i]) > threshold) return true;
-        }
-        return false;
+            if (!lastMatrix) return true;
+            for (let i = 0; i < 16; i++) {
+                if (Math.abs(newMatrix[i] - lastMatrix[i]) > threshold) return true;
+            }
+            return false;
         }
         function initAFrameTracking() {
            
