@@ -22,7 +22,7 @@
      
     
   
-    <a-marker-camera  id="ar-camera" preset="hiro" emitevents="true"></a-marker-camera> 
+    <a-marker-camera  id="ar-camera" preset="hiro" emitevents="true" transformToUnity></a-marker-camera> 
     <a-box position='0 0.5 0' material='opacity: 0.5;'></a-box>
    <!-- <a-entity id="ar-camera" camera position="0 0 0" look-controls="enabled:false"></a-entity>-->
    <!-- <a-entity id="ar-camera" camera look-controls >
@@ -117,7 +117,31 @@
               //  }
                 
             });
+            AFRAME.registerComponent('transformToUnity', {
+                schema: {},
+                init: function () {},
+                update: function () {
+                    const matrix = arCamera.object3D.matrixWorld;
+                const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
+                const roundedArray = matrixArray.map(n=>n.toFixed(4));
+                const matrixString = roundedArray.join(',');
+               // if (matrixChanged(matrixArray)) {
+                    console.log("data sent!");
+                    
+                    window.unityInstance.SendMessage(
+                        'ARManager',
+                        'OnARCameraUpdate',
+                        matrixString
+                    );
+                    lastMatrix = matrixArray;
+                },
+                tick: function () {},
+                remove: function () {},
+                pause: function () {},
+                play: function () {}
+                });
         }
+        
     </script>
 </body>
 </html>
