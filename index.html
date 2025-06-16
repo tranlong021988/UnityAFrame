@@ -98,7 +98,7 @@
             console.log("ar init !");
             var sceneEl = document.querySelector('a-scene');
             const arMarker= document.getElementById("ar-marker");
-            const arCamera= sceneEl.querySelector("#ar-camera");
+            const arCamera= sceneEl.querySelector("a-marker-camera");
             arCamera.addEventListener('markerFound', (event) => { console.log("marker found!");
                 if (!window.unityInstance) return;
                 // Lấy ma trận world của camera
@@ -124,7 +124,7 @@
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
                // if (matrixChanged(matrixArray)) {
-                    console.log("js string: "+matrixString);
+                    console.log("js string: "+matrix);
                     
                     window.unityInstance.SendMessage(
                         'ARManager',
