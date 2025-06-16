@@ -109,7 +109,7 @@
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');*/
                 const markerMatrix = arMarker.object3D.matrixWorld;
-                const viewMatrix = markerMatrix.clone().invert();
+                const viewMatrix = markerMatrix.invert();
                 const viewMatrixArray = Array.from(viewMatrix.elements);
                 const roundedViewMatrixArray = viewMatrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedViewMatrixArray.join(',');
