@@ -115,11 +115,11 @@
                // if (matrixChanged(matrixArray)) {
                     console.log("js string: "+matrixString);
                     
-                   /*window.unityInstance.SendMessage(
+                   window.unityInstance.SendMessage(
                         'ARManager',
                         'OnARCameraUpdate',
                         matrixString
-                    );*/
+                    );
                    // lastMatrix = matrixArray;
                     requestAnimationFrame(SendTransformToUnity);
             }
