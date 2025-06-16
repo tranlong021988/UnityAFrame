@@ -61,7 +61,7 @@
         const canvas = document.querySelector("#unity-canvas");
         // TẠO VÀ LOAD SCRIPT ĐỘNG
         const loaderScript = document.createElement("script");
-        loaderScript.src = loaderUrl;
+        //loaderScript.src = loaderUrl;
         loaderScript.onload = () => {
             // CHỈ GỌI KHI SCRIPT ĐÃ LOAD
             createUnityInstance(canvas, config, (progress) => {
