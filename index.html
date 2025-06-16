@@ -117,14 +117,8 @@
               //  }
                 
             });
-            AFRAME.registerComponent('transformtounity', {
-                schema: {},
-                init: function () {},
-                update: function () {
-                   
-                },
-                tick: function () {
-                     const matrix = arCamera.object3D.matrixWorld;
+            function SendTransformToUnity(){
+                const matrix = arCamera.object3D.matrixWorld;
                 const matrixArray = Array.from(matrix.elements); // Ma trận 4x4 dạng mảng 16 phần tử
                 const roundedArray = matrixArray.map(n=>n.toFixed(4));
                 const matrixString = roundedArray.join(',');
@@ -137,12 +131,10 @@
                         matrixString
                     );
                     lastMatrix = matrixArray;
-                },
-                remove: function () {},
-                pause: function () {},
-                play: function () {}
-                });
-        }
+                    requestAnimationFrame(SendTransformToUnity);
+            }
+             requestAnimationFrame(SendTransformToUnity);
+           
         
     </script>
 </body>
